@@ -16,60 +16,78 @@ const Hero = () => {
       once: true,
       easing: 'ease-out'
     });
-    // Video autoplays once on initial load (muted)
-    if (videoRef.current) {
-      videoRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch(() => {
-        setIsPlaying(false);
-      });
-    }
+
+    // Start video ONLY AFTER the Preloader animation finishes (2.6 seconds delay)
+    const preloaderTimer = setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.muted = true; // Muted initially for browser autoplay compliance
+        setIsMuted(true);
+        videoRef.current.play().then(() => {
+          setIsPlaying(true);
+        }).catch((err) => {
+          console.log("Preloader auto-play error:", err);
+          setIsPlaying(false);
+        });
+      }
+    }, 2600);
+
+    return () => clearTimeout(preloaderTimer);
   }, []);
 
   const toggleVideo = (e) => {
     e.stopPropagation();
-    if (videoRef.current) {
-      if (videoRef.current.paused || videoRef.current.ended) {
-        if (videoRef.current.ended) {
-          videoRef.current.currentTime = 0;
-        }
-        // Unmute audio when user clicks play button
-        videoRef.current.muted = isMuted;
-        videoRef.current.play().then(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (!video.paused && !video.ended) {
+      // Pause if currently playing
+      video.pause();
+      setIsPlaying(false);
+    } else {
+      // Replay or start video with sound
+      if (video.ended || video.currentTime === 0) {
+        video.currentTime = 0;
+      }
+      // Enable sound audio when user clicks play button
+      video.muted = false;
+      setIsMuted(false);
+
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
           setIsPlaying(true);
         }).catch((err) => {
-          console.log("Video playback error:", err);
+          console.log("Play error:", err);
+          setIsPlaying(false);
         });
-      } else {
-        videoRef.current.pause();
-        setIsPlaying(false);
       }
     }
   };
 
   const toggleAudio = (e) => {
     e.stopPropagation();
-    if (videoRef.current) {
-      const nextMuteState = !isMuted;
-      videoRef.current.muted = nextMuteState;
-      setIsMuted(nextMuteState);
-    }
+    const video = videoRef.current;
+    if (!video) return;
+
+    const nextMuteState = !isMuted;
+    video.muted = nextMuteState;
+    setIsMuted(nextMuteState);
   };
 
   return (
     <section id="home" className="relative w-full h-screen overflow-hidden bg-black font-sans">
-      {/* Clear Background Video - Autoplays once on site open */}
+      {/* Background Video - Starts after Preloader finishes */}
       <video
         ref={videoRef}
-        autoPlay
-        muted
         playsInline
+        preload="auto"
         onEnded={() => setIsPlaying(false)}
         className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-90 transition-opacity duration-500"
       >
         <source src={heroVideo} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
+
 
 
 
