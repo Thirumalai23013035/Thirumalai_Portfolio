@@ -17,43 +17,52 @@ const Hero = () => {
       easing: 'ease-out'
     });
 
-    // Start video WITH SOUND after Preloader animation finishes (2.6s delay)
-    const preloaderTimer = setTimeout(() => {
+    // Function to play video with FULL AUDIO UNMUTED
+    const playWithAudio = () => {
       const video = videoRef.current;
       if (video) {
-        video.muted = false; // Attempt sound unmuted playback first
-        setIsMuted(false);
-
-        video.play().then(() => {
-          setIsPlaying(true);
-        }).catch((err) => {
-          console.log("Unmuted autoplay restricted by browser, attempting muted fallback:", err);
-          // Fallback to muted playback if browser blocks unmuted autoplay
-          video.muted = true;
-          setIsMuted(true);
-          video.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
-        });
-      }
-    }, 2600);
-
-    // Unmute audio automatically on first user click/touch anywhere on the page
-    const handleFirstUserInteraction = () => {
-      const video = videoRef.current;
-      if (video && video.muted) {
         video.muted = false;
         setIsMuted(false);
+        const promise = video.play();
+        if (promise !== undefined) {
+          promise.then(() => {
+            setIsPlaying(true);
+          }).catch((err) => {
+            console.log("Unmuted autoplay waiting for user interaction:", err);
+            setIsPlaying(false);
+          });
+        }
       }
     };
 
-    window.addEventListener('click', handleFirstUserInteraction, { once: true });
-    window.addEventListener('touchstart', handleFirstUserInteraction, { once: true });
+    // Attempt audio playback after Preloader completes (2.6s)
+    const preloaderTimer = setTimeout(() => {
+      playWithAudio();
+    }, 2600);
+
+    // Instant user interaction handler: plays video WITH SOUND on first click/touch/mousemove
+    const handleUserInteraction = () => {
+      playWithAudio();
+      window.removeEventListener('click', handleUserInteraction);
+      window.removeEventListener('touchstart', handleUserInteraction);
+      window.removeEventListener('pointerdown', handleUserInteraction);
+      window.removeEventListener('keydown', handleUserInteraction);
+    };
+
+    window.addEventListener('click', handleUserInteraction);
+    window.addEventListener('touchstart', handleUserInteraction);
+    window.addEventListener('pointerdown', handleUserInteraction);
+    window.addEventListener('keydown', handleUserInteraction);
 
     return () => {
       clearTimeout(preloaderTimer);
-      window.removeEventListener('click', handleFirstUserInteraction);
-      window.removeEventListener('touchstart', handleFirstUserInteraction);
+      window.removeEventListener('click', handleUserInteraction);
+      window.removeEventListener('touchstart', handleUserInteraction);
+      window.removeEventListener('pointerdown', handleUserInteraction);
+      window.removeEventListener('keydown', handleUserInteraction);
     };
   }, []);
+
 
 
   const toggleVideo = (e) => {
