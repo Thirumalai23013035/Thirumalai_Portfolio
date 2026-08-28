@@ -21,8 +21,10 @@ const Hero = () => {
   const toggleVideo = (e) => {
     e.stopPropagation();
     if (videoRef.current) {
-      if (videoRef.current.paused) {
-        // Unmute video when user explicitly clicks play so voice audio is heard
+      if (videoRef.current.paused || videoRef.current.ended) {
+        if (videoRef.current.ended) {
+          videoRef.current.currentTime = 0;
+        }
         videoRef.current.muted = isMuted;
         videoRef.current.play().then(() => {
           setIsPlaying(true);
@@ -47,16 +49,17 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative w-full h-screen overflow-hidden bg-black font-sans">
-      {/* Clear Background Video */}
+      {/* Clear Background Video - Runs once until play button clicked */}
       <video
         ref={videoRef}
-        loop
         playsInline
+        onEnded={() => setIsPlaying(false)}
         className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-90 transition-opacity duration-500"
       >
         <source src={heroVideo} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
+
 
       {/* Light Text Protection Gradient */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/30 z-10 pointer-events-none"></div>
