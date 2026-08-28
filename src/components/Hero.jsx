@@ -1,14 +1,14 @@
 import { useRef, useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { ArrowUpRight, Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { ArrowUpRight, Play, Pause } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, LeetCodeIcon } from './Icons';
 import heroVideo from '../assets/hero video/Developer_introduces_self_and_sk…_202606051918.mp4';
 
-const Hero = () => {
-  const videoRef = useRef(null);
+const Hero = ({ videoRef: externalVideoRef }) => {
+  const internalVideoRef = useRef(null);
+  const videoRef = externalVideoRef || internalVideoRef;
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
     AOS.init({
@@ -17,110 +17,56 @@ const Hero = () => {
       easing: 'ease-out'
     });
 
-    // Function to play video with FULL AUDIO UNMUTED
-    const playWithAudio = () => {
+    // Unmute audio on any ambient click, touch, or keydown
+    const handleAmbientUserInteraction = () => {
       const video = videoRef.current;
       if (video) {
         video.muted = false;
-        setIsMuted(false);
-        const promise = video.play();
-        if (promise !== undefined) {
-          promise.then(() => {
-            setIsPlaying(true);
-          }).catch((err) => {
-            console.log("Unmuted autoplay waiting for user interaction:", err);
-            setIsPlaying(false);
-          });
-        }
+        video.volume = 1.0;
       }
     };
 
-    // Attempt audio playback after Preloader completes (2.6s)
-    const preloaderTimer = setTimeout(() => {
-      playWithAudio();
-    }, 2600);
-
-    // Instant user interaction handler: plays video WITH SOUND on first click/touch/mousemove
-    const handleUserInteraction = () => {
-      playWithAudio();
-      window.removeEventListener('click', handleUserInteraction);
-      window.removeEventListener('touchstart', handleUserInteraction);
-      window.removeEventListener('pointerdown', handleUserInteraction);
-      window.removeEventListener('keydown', handleUserInteraction);
-    };
-
-    window.addEventListener('click', handleUserInteraction);
-    window.addEventListener('touchstart', handleUserInteraction);
-    window.addEventListener('pointerdown', handleUserInteraction);
-    window.addEventListener('keydown', handleUserInteraction);
+    const events = ['click', 'touchstart', 'keydown'];
+    events.forEach(evt => window.addEventListener(evt, handleAmbientUserInteraction));
 
     return () => {
-      clearTimeout(preloaderTimer);
-      window.removeEventListener('click', handleUserInteraction);
-      window.removeEventListener('touchstart', handleUserInteraction);
-      window.removeEventListener('pointerdown', handleUserInteraction);
-      window.removeEventListener('keydown', handleUserInteraction);
+      events.forEach(evt => window.removeEventListener(evt, handleAmbientUserInteraction));
     };
-  }, []);
-
-
+  }, [videoRef]);
 
   const toggleVideo = (e) => {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
     const video = videoRef.current;
     if (!video) return;
 
     if (!video.paused && !video.ended) {
-      // Pause if currently playing
       video.pause();
-      setIsPlaying(false);
     } else {
-      // Replay or start video with sound
-      if (video.ended || video.currentTime === 0) {
+      if (video.ended) {
         video.currentTime = 0;
       }
-      // Enable sound audio when user clicks play button
       video.muted = false;
-      setIsMuted(false);
-
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          setIsPlaying(true);
-        }).catch((err) => {
-          console.log("Play error:", err);
-          setIsPlaying(false);
-        });
-      }
+      video.volume = 1.0;
+      video.play().catch((err) => {
+        console.log("Play button error:", err);
+      });
     }
-  };
-
-  const toggleAudio = (e) => {
-    e.stopPropagation();
-    const video = videoRef.current;
-    if (!video) return;
-
-    const nextMuteState = !isMuted;
-    video.muted = nextMuteState;
-    setIsMuted(nextMuteState);
   };
 
   return (
     <section id="home" className="relative w-full h-screen overflow-hidden bg-black font-sans">
-      {/* Background Video - Starts after Preloader finishes */}
+      {/* Clear Background Video */}
       <video
         ref={videoRef}
         playsInline
-        preload="auto"
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
         onEnded={() => setIsPlaying(false)}
         className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-90 transition-opacity duration-500"
       >
         <source src={heroVideo} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-
-
-
 
       {/* Light Text Protection Gradient */}
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/30 z-10 pointer-events-none"></div>
@@ -231,7 +177,7 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Side: Play Video & Sound Controls */}
+          {/* Right Side: Play Video Controls */}
           <div 
             data-aos="zoom-in"
             data-aos-delay="400"
@@ -254,27 +200,6 @@ const Hero = () => {
               </span>
             </div>
 
-            {/* Sound Mute / Unmute Toggle Button */}
-            {isPlaying && (
-              <button
-                onClick={toggleAudio}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 border border-white/20 text-white text-xs font-semibold hover:bg-black transition-all backdrop-blur-md"
-                title={isMuted ? "Unmute Sound" : "Mute Sound"}
-              >
-                {isMuted ? (
-                  <>
-                    <VolumeX className="w-4 h-4 text-red-400" />
-                    <span>Unmute</span>
-                  </>
-                ) : (
-                  <>
-                    <Volume2 className="w-4 h-4 text-green-400" />
-                    <span>Sound On</span>
-                  </>
-                )}
-              </button>
-            )}
-
           </div>
 
         </div>
@@ -282,7 +207,9 @@ const Hero = () => {
     </section>
   );
 };
-
 export default Hero;
+
+
+
 
 
