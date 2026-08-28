@@ -75,35 +75,35 @@ const Projects = () => {
     : projectsData.filter((p) => p.category === selectedFilter);
 
   return (
-    <section id="projects" className="bg-[#050505] text-white py-28 px-6 md:px-12 w-full relative overflow-hidden font-sans border-t border-white/10">
+    <section id="projects" className="bg-[#050505] text-white py-20 sm:py-28 px-4 sm:px-6 md:px-12 w-full relative overflow-hidden font-sans border-t border-white/10">
       {/* Background Decor */}
       <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6" data-aos="fade-up">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-4 sm:gap-6" data-aos="fade-up">
           <div>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold uppercase tracking-widest mb-4">
+            <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1 sm:py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-[11px] sm:text-xs font-bold uppercase tracking-widest mb-3 sm:mb-4">
               <Layers className="w-3.5 h-3.5" />
               Featured Deliverables
             </div>
-            <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
               Featured <span className="text-[#ff2a2a]">Projects</span>
             </h2>
           </div>
-          <p className="text-gray-400 text-sm md:text-base max-w-md font-medium">
+          <p className="text-gray-400 text-xs sm:text-sm md:text-base max-w-md font-medium">
             Production-grade applications built with Spring Boot, MERN Stack, and Machine Learning models.
           </p>
         </div>
 
         {/* Filter Buttons */}
-        <div className="flex flex-wrap gap-3 mb-12" data-aos="fade-up" data-aos-delay="100">
+        <div className="flex flex-wrap gap-2 sm:gap-3 mb-10 sm:mb-12" data-aos="fade-up" data-aos-delay="100">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedFilter(cat)}
-              className={`px-5 py-2 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 ${
+              className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 ${
                 selectedFilter === cat
                   ? 'bg-white text-black font-bold shadow-[0_0_20px_rgba(255,255,255,0.3)]'
                   : 'bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10'
@@ -115,7 +115,7 @@ const Projects = () => {
         </div>
 
         {/* Projects Showcase Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           {filteredProjects.map((project, idx) => {
             const Icon = project.icon;
             return (
@@ -127,39 +127,39 @@ const Projects = () => {
               >
                 <div>
                   {/* Top Gradient Banner & Header */}
-                  <div className={`p-6 bg-gradient-to-r ${project.accentColor} relative overflow-hidden`}>
+                  <div className={`p-5 sm:p-6 bg-gradient-to-r ${project.accentColor} relative overflow-hidden`}>
                     <div className="absolute -right-4 -bottom-4 text-white/10 transform rotate-12 group-hover:scale-110 transition-transform">
-                      <Icon size={120} />
+                      <Icon size={100} />
                     </div>
                     <div className="relative z-10 flex justify-between items-start">
-                      <span className="bg-black/60 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-white/20">
+                      <span className="bg-black/60 backdrop-blur-md text-white text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2.5 sm:px-3 py-1 rounded-full border border-white/20">
                         {project.badge}
                       </span>
-                      <Icon className="w-6 h-6 text-white" />
+                      <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <h3 className="relative z-10 text-2xl font-black text-white mt-8 leading-tight">
+                    <h3 className="relative z-10 text-xl sm:text-2xl font-black text-white mt-6 sm:mt-8 leading-tight">
                       {project.title.split('–')[0]}
                     </h3>
-                    <p className="relative z-10 text-white/80 text-xs font-semibold mt-1">
+                    <p className="relative z-10 text-white/80 text-[11px] sm:text-xs font-semibold mt-1">
                       {project.category}
                     </p>
                   </div>
 
                   {/* Body Content */}
-                  <div className="p-6 md:p-8 flex flex-col gap-6">
-                    <p className="text-gray-300 text-sm leading-relaxed font-medium">
+                  <div className="p-5 sm:p-6 md:p-8 flex flex-col gap-5 sm:gap-6">
+                    <p className="text-gray-300 text-xs sm:text-sm leading-relaxed font-medium">
                       {project.description}
                     </p>
 
                     {/* Key Highlights */}
                     <div>
-                      <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+                      <h4 className="text-[11px] sm:text-xs font-bold text-gray-400 uppercase tracking-wider mb-2.5 sm:mb-3">
                         Key Features & Capabilities
                       </h4>
-                      <ul className="space-y-2">
+                      <ul className="space-y-1.5 sm:space-y-2">
                         {project.highlights.map((item, i) => (
-                          <li key={i} className="flex items-start gap-2.5 text-xs text-gray-300 leading-snug">
-                            <Check className="w-4 h-4 text-[#ff2a2a] shrink-0 mt-0.5" />
+                          <li key={i} className="flex items-start gap-2 text-[11px] sm:text-xs text-gray-300 leading-snug">
+                            <Check className="w-3.5 h-3.5 text-[#ff2a2a] shrink-0 mt-0.5" />
                             <span>{item}</span>
                           </li>
                         ))}
@@ -168,14 +168,14 @@ const Projects = () => {
 
                     {/* Tech Stack Pills */}
                     <div>
-                      <h4 className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
+                      <h4 className="text-[9px] sm:text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-2">
                         Technologies Used
                       </h4>
-                      <div className="flex flex-wrap gap-1.5">
+                      <div className="flex flex-wrap gap-1 sm:gap-1.5">
                         {project.techStack.map((tech, i) => (
                           <span
                             key={i}
-                            className="bg-white/5 border border-white/10 text-gray-300 text-[11px] font-medium px-2.5 py-1 rounded-md"
+                            className="bg-white/5 border border-white/10 text-gray-300 text-[10px] sm:text-[11px] font-medium px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md"
                           >
                             {tech}
                           </span>
@@ -186,23 +186,23 @@ const Projects = () => {
                 </div>
 
                 {/* Card Footer Actions */}
-                <div className="p-6 pt-0 flex items-center gap-3">
+                <div className="p-5 sm:p-6 pt-0 flex items-center gap-2.5 sm:gap-3">
                   <a
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 py-3 px-4 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all duration-300"
+                    className="flex-1 py-2.5 sm:py-3 px-3 sm:px-4 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-white text-[11px] sm:text-xs font-bold flex items-center justify-center gap-2 transition-all duration-300"
                   >
-                    <GithubIcon className="w-4 h-4" />
-                    GitHub Repository
+                    <GithubIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    GitHub Repo
                   </a>
 
                   <a
                     href={project.liveUrl}
-                    className="p-3 rounded-xl bg-[#ff2a2a] hover:bg-red-600 text-white flex items-center justify-center transition-all duration-300 shadow-[0_0_15px_rgba(255,42,42,0.4)]"
+                    className="p-2.5 sm:p-3 rounded-xl bg-[#ff2a2a] hover:bg-red-600 text-white flex items-center justify-center transition-all duration-300 shadow-[0_0_15px_rgba(255,42,42,0.4)]"
                     title="Live Demo"
                   >
-                    <ExternalLink className="w-4 h-4" />
+                    <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </a>
                 </div>
               </div>
@@ -211,16 +211,16 @@ const Projects = () => {
         </div>
 
         {/* LeetCode & Problem Solving Banner */}
-        <div className="mt-16 bg-[#121212] border border-white/10 rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6" data-aos="fade-up">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
-              <Sparkles className="w-7 h-7" />
+        <div className="mt-12 sm:mt-16 bg-[#121212] border border-white/10 rounded-3xl p-5 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6" data-aos="fade-up">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+              <Sparkles className="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white mb-1">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-1">
                 433+ DSA Problems Solved on LeetCode
               </h3>
-              <p className="text-gray-400 text-xs md:text-sm">
+              <p className="text-gray-400 text-xs sm:text-sm">
                 Top 52% globally (Rating 1,477) across Java, C++, and Python problem sets.
               </p>
             </div>
@@ -229,7 +229,7 @@ const Projects = () => {
             href="https://leetcode.com/u/thiru_07"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 rounded-full bg-amber-500 text-black font-extrabold text-xs uppercase tracking-wider hover:bg-amber-400 transition-all duration-300 shadow-[0_0_20px_rgba(245,158,11,0.3)] shrink-0"
+            className="w-full md:w-auto text-center px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-amber-500 text-black font-extrabold text-xs uppercase tracking-wider hover:bg-amber-400 transition-all duration-300 shadow-[0_0_20px_rgba(245,158,11,0.3)] shrink-0"
           >
             View LeetCode Profile
           </a>
