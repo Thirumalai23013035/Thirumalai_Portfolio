@@ -1,13 +1,14 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-// Adjusted import path for the video
+import { ArrowUpRight, Play, Pause } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, LeetCodeIcon } from './Icons';
 import heroVideo from '../assets/hero video/Developer_introduces_self_and_sk…_202606051918.mp4';
 
 const Hero = () => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+
 
   useEffect(() => {
     AOS.init({
@@ -15,7 +16,6 @@ const Hero = () => {
       once: true,
       easing: 'ease-out'
     });
-    // Video does NOT autoplay anymore
   }, []);
 
   const toggleVideo = (e) => {
@@ -32,103 +32,150 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative w-full h-screen overflow-hidden bg-black">
+    <section id="home" className="relative w-full h-screen overflow-hidden bg-black font-sans">
       {/* Background Video */}
       <video
         ref={videoRef}
         loop
-        muted={isMuted}
+        muted
         playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+        className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-40"
       >
+
         <source src={heroVideo} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
 
+      {/* Dark Overlay Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10"></div>
+
       {/* Content Container */}
-      <div className="absolute inset-0 z-20 px-6 pb-20 md:pb-[8%] md:px-12 max-w-7xl mx-auto flex flex-col md:flex-row justify-end md:justify-between items-start md:items-end text-left w-full">
+      <div className="relative z-20 px-6 pb-12 pt-28 md:pb-[6%] md:px-12 max-w-7xl mx-auto h-full flex flex-col justify-between text-left w-full">
         
-        {/* Left Side: Text and Buttons */}
-        <div className="flex flex-col items-start text-left max-w-2xl w-full">
-          {/* Main Heading */}
-          <h1 
-            data-aos="fade-up"
-            className="text-white text-3xl md:text-5xl font-bold mb-4 tracking-tight"
-          >
-            Hi, I’m a <br /> <span className="text-transparent [-webkit-text-stroke:1.5px_black]">Full Stack Developer</span>
-          </h1>
+        {/* Top Spacer / Quick Location & Availability */}
+        <div className="flex justify-between items-center" data-aos="fade-down">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-white">
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+            Available for Java & MERN Full Stack Roles
+          </div>
 
-          {/* Subheading */}
-          <p 
-            data-aos="fade-up"
-            data-aos-delay="200"
-            className="text-white text-sm md:text-lg font-semibold mb-8 max-w-md drop-shadow-md"
-          >
-            I build fast, scalable and modern web applications using React, Node.js and Tailwind CSS.
-          </p>
+          {/* Social Icons Desktop */}
+          <div className="hidden sm:flex items-center gap-3">
+            <a
+              href="https://github.com/Thirumalai23013035"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-colors"
+              title="GitHub"
+            >
+              <GithubIcon className="w-4 h-4" />
+            </a>
+            <a
+              href="https://linkedin.com/in/thirumalai-v7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-colors"
+              title="LinkedIn"
+            >
+              <LinkedinIcon className="w-4 h-4" />
+            </a>
+            <a
+              href="https://leetcode.com/u/thiru_07"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-colors"
+              title="LeetCode"
+            >
+              <LeetCodeIcon className="w-4 h-4" />
+            </a>
+          </div>
 
-          {/* Buttons */}
-          <div 
-            data-aos="fade-up"
-            data-aos-delay="400"
-            className="flex flex-row flex-wrap items-center gap-3 w-full"
-          >
-            {/* Primary Button */}
-            <button className="px-4 py-2 md:px-6 md:py-2 text-xs md:text-base rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-md">
-              View My Work
-            </button>
+        </div>
+
+        {/* Bottom Hero Main Banner */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 w-full">
+          
+          {/* Left Side: Text and Buttons */}
+          <div className="flex flex-col items-start text-left max-w-3xl w-full">
             
-            {/* Secondary Button - Glassmorphism style */}
-            <button className="px-4 py-2 md:px-6 md:py-2 text-xs md:text-base rounded-full bg-black/40 border border-white text-white font-semibold hover:bg-black/60 transition-all duration-300 backdrop-blur-md">
-              Contact Me
-            </button>
-          </div>
-        </div>
+            {/* Target Role Tag */}
+            <div data-aos="fade-up" className="text-red-500 text-xs md:text-sm font-extrabold uppercase tracking-widest mb-2">
+              Full Stack Developer (Java | MERN)
+            </div>
 
-        {/* Right Side: Play Video Button */}
-        <div 
-          data-aos="zoom-in"
-          data-aos-delay="600"
-          className="mt-8 md:mt-0 flex flex-row md:flex-col items-center gap-2 md:gap-3 cursor-pointer group self-start md:self-auto"
-          onClick={toggleVideo}
-        >
-          <div className="w-12 h-12 md:w-20 md:h-20 rounded-full border border-white/30 bg-black/20 backdrop-blur-md flex justify-center items-center group-hover:scale-110 group-hover:bg-[#ff2a2a] transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_40px_rgba(255,42,42,0.6)]">
-            {!isPlaying || isMuted ? (
-              // Play Icon
-              <svg className="w-5 h-5 md:w-8 md:h-8 text-white ml-0.5 md:ml-1" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            ) : (
-              // Pause Icon
-              <svg className="w-5 h-5 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-              </svg>
-            )}
-          </div>
-          <span className="text-white text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">
-            {!isPlaying || isMuted ? "Play Reel" : "Pause"}
-          </span>
-        </div>
-      </div>
+            {/* Main Heading */}
+            <h1 
+              data-aos="fade-up"
+              data-aos-delay="100"
+              className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] mb-4"
+            >
+              Hi, I’m <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-[#ff2a2a]">THIRUMALAI V</span>
+            </h1>
 
-      {/* Scroll Indicator */}
-      <div 
-        data-aos="fade-up"
-        data-aos-delay="800"
-        className="hidden md:block absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 pointer-events-none"
-      >
-        <div className="animate-bounce">
-          <svg 
-            className="w-6 h-6 text-black drop-shadow-[0_1px_2px_rgba(255,255,255,0.6)]" 
-            fill="none" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth="3" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
+            {/* Subheading */}
+            <p 
+              data-aos="fade-up"
+              data-aos-delay="200"
+              className="text-gray-300 text-sm md:text-base lg:text-lg font-medium mb-8 max-w-xl leading-relaxed"
+            >
+              Building enterprise-grade Java Spring Boot microservices, high-performance MERN stack platforms, and AI-powered verification systems.
+            </p>
+
+            {/* Buttons & Socials */}
+            <div 
+              data-aos="fade-up"
+              data-aos-delay="300"
+              className="flex flex-wrap items-center gap-3 w-full"
+            >
+              {/* View Work Button */}
+              <a 
+                href="#projects" 
+                className="px-6 py-3 text-xs md:text-sm rounded-full bg-[#ff2a2a] text-white font-bold hover:bg-red-600 transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(255,42,42,0.4)] flex items-center gap-2"
+              >
+                View My Work
+                <ArrowUpRight className="w-4 h-4" />
+              </a>
+              
+              {/* Contact Button */}
+              <a 
+                href="#contact" 
+                className="px-6 py-3 text-xs md:text-sm rounded-full bg-white/10 border border-white/20 text-white font-semibold hover:bg-white/20 transition-all duration-300 backdrop-blur-md"
+              >
+                Contact Me
+              </a>
+
+              {/* LeetCode Badge */}
+              <a
+                href="https://leetcode.com/u/thiru_07"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-3 text-xs rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 font-bold hover:bg-amber-500/20 transition-all"
+              >
+                ⚡ 433+ DSA Problems Solved
+              </a>
+            </div>
+          </div>
+
+          {/* Right Side: Play Video Reel Control */}
+          <div 
+            data-aos="zoom-in"
+            data-aos-delay="400"
+            className="flex flex-row md:flex-col items-center gap-3 cursor-pointer group shrink-0"
+            onClick={toggleVideo}
           >
-            <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-          </svg>
+            <div className="w-14 h-14 md:w-20 md:h-20 rounded-full border border-white/30 bg-black/40 backdrop-blur-md flex justify-center items-center group-hover:scale-110 group-hover:bg-[#ff2a2a] transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.1)] group-hover:shadow-[0_0_40px_rgba(255,42,42,0.6)]">
+              {!isPlaying ? (
+                <Play className="w-6 h-6 md:w-8 md:h-8 text-white ml-1 fill-white" />
+              ) : (
+                <Pause className="w-6 h-6 md:w-8 md:h-8 text-white fill-white" />
+              )}
+            </div>
+            <span className="text-white text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-70 group-hover:opacity-100 transition-opacity">
+              {!isPlaying ? "Play Intro Video" : "Pause Video"}
+            </span>
+
+          </div>
+
         </div>
       </div>
     </section>
@@ -136,3 +183,4 @@ const Hero = () => {
 };
 
 export default Hero;
+

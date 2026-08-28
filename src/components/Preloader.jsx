@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Preloader = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Wait for the water fill animation (1.5s) + a small pause (0.5s)
-    // before the shutter goes up smoothly.
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2200);
@@ -30,19 +28,19 @@ const Preloader = () => {
             transition={{ duration: 0.4, ease: "easeOut" }}
             className="relative text-5xl md:text-7xl font-black tracking-tighter"
           >
-            {/* Background text (empty state) */}
-            <div className="text-red-900/30">
-              Leeshark<span className="text-red-900/30">.</span>
+            {/* Background text */}
+            <div className="text-red-900/30 uppercase">
+              Thirumalai<span className="text-red-900/30">.</span>
             </div>
 
-            {/* Foreground text (water fill state) */}
+            {/* Foreground text */}
             <motion.div 
-              className="absolute top-0 left-0 text-white overflow-hidden whitespace-nowrap"
+              className="absolute top-0 left-0 text-white overflow-hidden whitespace-nowrap uppercase"
               initial={{ clipPath: 'inset(100% 0 0 0)' }}
               animate={{ clipPath: 'inset(0% 0 0 0)' }}
               transition={{ duration: 1.6, ease: "easeInOut", delay: 0.2 }}
             >
-              Leeshark<span className="text-black">.</span>
+              Thirumalai<span className="text-black">.</span>
             </motion.div>
           </motion.div>
 
@@ -51,5 +49,6 @@ const Preloader = () => {
     </AnimatePresence>
   );
 };
+
 
 export default Preloader;

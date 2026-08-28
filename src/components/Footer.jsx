@@ -1,50 +1,84 @@
-import React from 'react';
+import { Mail, Heart } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, LeetCodeIcon } from './Icons';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#111111] text-[#d4d4d4] py-16 px-6 md:px-12 w-full font-mono text-[10px] md:text-xs tracking-widest flex flex-col justify-between min-h-[50vh]">
+    <footer className="bg-[#080808] text-[#d4d4d4] py-16 px-6 md:px-12 w-full font-sans text-xs tracking-wider flex flex-col justify-between min-h-[45vh] border-t border-white/10">
       
       {/* Top Row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 w-full font-medium">
-        <div className="flex flex-col gap-1">
-          <p>Cinematic & Creative Production</p>
-          <p>Lighting, Editing, Photo</p>
-          <p>Motion Graphics</p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full font-medium max-w-7xl mx-auto">
+        <div className="flex flex-col gap-1.5">
+          <p className="text-white font-bold text-sm">THIRUMALAI V</p>
+          <p className="text-gray-400">Full Stack Developer (Java | MERN)</p>
+          <p className="text-gray-500 text-[11px]">Chennai, Tamil Nadu, India</p>
         </div>
         
-        <div className="flex flex-col gap-1 md:items-center">
-          <p>2+ years of experience</p>
-          <a href="#work" className="underline hover:text-white transition-colors mt-1 underline-offset-4 decoration-1">View Work</a>
+        <div className="flex flex-col gap-1.5 md:items-center">
+          <p className="text-gray-400">Target Role: Java & MERN Full Stack</p>
+          <a href="#projects" className="text-[#ff2a2a] hover:underline font-bold mt-1">Explore Featured Projects →</a>
         </div>
         
-        <div className="flex flex-col gap-1 md:items-end">
-          <p>Worldwide Available</p>
-          <p>{new Date().getFullYear()}</p>
+        <div className="flex flex-col gap-2 md:items-end">
+          <div className="flex items-center gap-3">
+            <a
+              href="https://github.com/Thirumalai23013035"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors"
+              title="GitHub"
+            >
+              <GithubIcon className="w-4 h-4" />
+            </a>
+            <a
+              href="https://linkedin.com/in/thirumalai-v7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors"
+              title="LinkedIn"
+            >
+              <LinkedinIcon className="w-4 h-4" />
+            </a>
+            <a
+              href="https://leetcode.com/u/thiru_07"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors"
+              title="LeetCode"
+            >
+              <LeetCodeIcon className="w-4 h-4" />
+            </a>
+          </div>
+
+          <p className="text-gray-500 text-[11px] mt-1">{new Date().getFullYear()} All Rights Reserved</p>
         </div>
       </div>
 
-      {/* Middle Huge Text */}
-      <div className="w-full flex justify-center items-center py-20 md:py-24 overflow-hidden">
-        <h2 className="text-[18vw] md:text-[16vw] leading-none font-sans font-bold tracking-tighter lowercase select-none text-[#f4f4f4] w-full text-center">
+      {/* Middle Banner Text */}
+      <div className="w-full flex justify-center items-center py-16 overflow-hidden">
+        <h2 className="text-[16vw] md:text-[14vw] leading-none font-black tracking-tighter uppercase select-none text-white/5 w-full text-center">
           THIRUMALAI
         </h2>
       </div>
 
       {/* Bottom Row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 w-full items-end font-medium">
-        <div className="flex flex-col gap-6">
-          <a href="#contact" className="underline hover:text-white transition-colors underline-offset-4 decoration-1 font-bold">Contact</a>
-          <p className="text-white/60 font-mono text-[9px] md:text-[10px]">
-            &copy; {new Date().getFullYear()} Thirumalai Studio | Built with React
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full items-end font-medium max-w-7xl mx-auto border-t border-white/5 pt-8">
+        <div className="flex flex-col gap-2">
+          <p className="text-gray-400 text-[11px] flex items-center gap-1">
+            Built with <Heart className="w-3.5 h-3.5 text-[#ff2a2a] fill-[#ff2a2a]" /> React, Tailwind CSS & Framer Motion
           </p>
         </div>
         
         <div className="flex flex-col gap-1 md:items-center">
-          <a href="mailto:thirumalaiofficial007@gmail.com" className="underline hover:text-white transition-colors underline-offset-4 decoration-1 lowercase">hello@Thirumalai.com</a>
+          <a href="mailto:thirumalaiofficial007@gmail.com" className="text-white hover:text-[#ff2a2a] transition-colors font-bold lowercase flex items-center gap-1.5">
+            <Mail className="w-3.5 h-3.5" />
+            thirumalaiofficial007@gmail.com
+          </a>
         </div>
         
         <div className="flex flex-col gap-1 md:items-end">
-          <a href="#" className="underline hover:text-white transition-colors underline-offset-4 decoration-1">Privacy Policy</a>
+          <a href="#home" className="text-gray-400 hover:text-white transition-colors text-xs font-semibold">
+            Back to Top ↑
+          </a>
         </div>
       </div>
     </footer>
@@ -52,3 +86,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
