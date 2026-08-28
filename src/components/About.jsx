@@ -2,6 +2,7 @@ import stackImage from '../assets/about/image.png';
 import reactImage from '../assets/about/react.png';
 import nodeImage from '../assets/about/node.png';
 import mongoImage from '../assets/about/mongodb.png';
+import { downloadResume } from '../utils/downloadResume';
 
 
 const About = () => {
@@ -79,28 +80,45 @@ const About = () => {
             </div>
           </div>
 
-          {/* Horizontal Skills Row */}
-          <div>
-            <p className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-black/80 mb-3">Core Technology Stack</p>
-            <div className="flex items-center gap-4 sm:gap-6">
-              <img 
-                data-aos="zoom-in" data-aos-delay="300"
-                src={reactImage} 
-                alt="React" 
-                className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain hover:scale-110 transition-transform duration-300 cursor-pointer drop-shadow-2xl" 
-              />
-              <img 
-                data-aos="zoom-in" data-aos-delay="450"
-                src={nodeImage} 
-                alt="Node.js" 
-                className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain hover:scale-110 transition-transform duration-300 cursor-pointer drop-shadow-2xl" 
-              />
-              <img 
-                data-aos="zoom-in" data-aos-delay="600"
-                src={mongoImage} 
-                alt="MongoDB" 
-                className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain hover:scale-110 transition-transform duration-300 cursor-pointer drop-shadow-2xl" 
-              />
+          {/* Horizontal Skills Row & Resume CTA */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div>
+              <p className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-black/80 mb-3">Core Technology Stack</p>
+              <div className="flex items-center gap-4 sm:gap-6">
+                <img 
+                  data-aos="zoom-in" data-aos-delay="300"
+                  src={reactImage} 
+                  alt="React" 
+                  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain hover:scale-110 transition-transform duration-300 cursor-pointer drop-shadow-2xl" 
+                />
+                <img 
+                  data-aos="zoom-in" data-aos-delay="450"
+                  src={nodeImage} 
+                  alt="Node.js" 
+                  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain hover:scale-110 transition-transform duration-300 cursor-pointer drop-shadow-2xl" 
+                />
+                <img 
+                  data-aos="zoom-in" data-aos-delay="600"
+                  src={mongoImage} 
+                  alt="MongoDB" 
+                  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain hover:scale-110 transition-transform duration-300 cursor-pointer drop-shadow-2xl" 
+                />
+              </div>
+            </div>
+
+            {/* Resume Button */}
+            <div data-aos="fade-up" data-aos-delay="400" className="pt-2 sm:pt-0">
+              <a
+                href="/resume.pdf"
+                download="Thirumalai_Resume.pdf"
+                onClick={downloadResume}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-black text-white font-extrabold text-xs uppercase tracking-wider hover:bg-white hover:text-black transition-all duration-300 shadow-[0_10px_25px_rgba(0,0,0,0.3)] transform hover:scale-105 cursor-pointer"
+              >
+                <span>📄 Download Resume</span>
+                <span>↓</span>
+              </a>
             </div>
           </div>
 

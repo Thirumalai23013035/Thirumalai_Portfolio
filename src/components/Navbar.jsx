@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { downloadResume } from '../utils/downloadResume';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,7 +61,18 @@ const Navbar = () => {
         </div>
 
         {/* Right Side: CTA Button */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-3">
+          <a 
+            href="/resume.pdf" 
+            download="Thirumalai_Resume.pdf"
+            onClick={downloadResume}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 rounded-full border border-white/20 hover:border-white/50 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
+          >
+            <span>Resume</span>
+            <span>↓</span>
+          </a>
           <a 
             href="#contact" 
             className="px-5 py-2 rounded-full bg-[#ff2a2a] text-white font-bold text-xs uppercase tracking-wider hover:bg-red-600 shadow-[0_0_15px_rgba(255,42,42,0.4)] transition-all duration-300"
@@ -105,7 +117,17 @@ const Navbar = () => {
               <span className="text-xs text-[#ff2a2a]">→</span>
             </a>
           ))}
-          <div className="pt-4 pb-2">
+          <div className="pt-4 pb-2 flex flex-col gap-3">
+             <a 
+               href="/resume.pdf" 
+               download="Thirumalai_Resume.pdf"
+               onClick={(e) => { setIsOpen(false); downloadResume(e); }}
+               target="_blank"
+               rel="noopener noreferrer"
+               className="inline-block px-6 py-3 rounded-full border border-white/30 text-white font-extrabold hover:bg-white/10 transition-colors w-full text-center shadow-lg text-sm cursor-pointer"
+             >
+               Download Resume (PDF) ↓
+             </a>
              <a 
                href="#contact" 
                onClick={() => setIsOpen(false)} 

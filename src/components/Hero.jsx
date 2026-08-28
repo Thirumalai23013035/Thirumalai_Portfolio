@@ -1,8 +1,9 @@
 import { useRef, useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { ArrowUpRight, Play, Pause } from 'lucide-react';
+import { ArrowUpRight, Play, Pause, Download } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, LeetCodeIcon } from './Icons';
+import { downloadResume } from '../utils/downloadResume';
 import heroVideo from '../assets/hero video/Developer_introduces_self_and_sk…_202606051918.mp4';
 
 const Hero = ({ videoRef: externalVideoRef }) => {
@@ -157,6 +158,20 @@ const Hero = ({ videoRef: externalVideoRef }) => {
                 <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </a>
               
+              {/* Download Resume Button */}
+              <a 
+                href="/resume.pdf" 
+                download="Thirumalai_Resume.pdf"
+                onClick={downloadResume}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm rounded-full bg-white text-black font-extrabold hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center gap-1.5 sm:gap-2 cursor-pointer"
+                title="Download Resume"
+              >
+                <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#ff2a2a]" />
+                Resume
+              </a>
+
               {/* Contact Button */}
               <a 
                 href="#contact" 

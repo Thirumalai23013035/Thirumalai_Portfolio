@@ -1,17 +1,17 @@
 import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, Loader2 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, LeetCodeIcon } from './Icons';
 
 const Contact = () => {
   const ref = useRef(null);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    message: '',
-    permission: false
+    message: ''
   });
 
   const { scrollYProgress } = useScroll({
@@ -21,13 +21,43 @@ const Contact = () => {
   
   const y = useTransform(scrollYProgress, [0, 1], ["-20%", "30%"]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ firstName: '', lastName: '', email: '', message: '', permission: false });
-    }, 4000);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/thirumalaiofficial007@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: `${formData.firstName} ${formData.lastName}`.trim(),
+          email: formData.email,
+          message: formData.message,
+          _subject: `⚡ Portfolio Inquiry from ${formData.firstName} ${formData.lastName}`,
+          _template: 'table',
+          _captcha: 'false'
+        })
+      });
+
+      const data = await response.json();
+      if (response.ok || data.success === 'true' || data.success === true) {
+        setSubmitted(true);
+        setFormData({ firstName: '', lastName: '', email: '', message: '' });
+      } else {
+        // Fallback directly to mailto
+        window.location.href = `mailto:thirumalaiofficial007@gmail.com?subject=${encodeURIComponent(`Portfolio Message from ${formData.firstName}`)}&body=${encodeURIComponent(`${formData.message}\n\nSender: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}`)}`;
+        setSubmitted(true);
+      }
+    } catch (err) {
+      // Network or CORS fallback
+      window.location.href = `mailto:thirumalaiofficial007@gmail.com?subject=${encodeURIComponent(`Portfolio Message from ${formData.firstName}`)}&body=${encodeURIComponent(`${formData.message}\n\nSender: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}`)}`;
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -105,9 +135,15 @@ const Contact = () => {
             <div className="bg-black/40 border border-white/30 rounded-2xl p-6 sm:p-8 text-center my-6 sm:my-8">
               <CheckCircle className="w-10 h-10 sm:w-12 sm:h-12 text-green-400 mx-auto mb-3 sm:mb-4 animate-bounce" />
               <h3 className="text-xl sm:text-2xl font-black text-white mb-2">Message Sent Successfully!</h3>
-              <p className="text-xs sm:text-sm font-medium text-red-100">
-                Thank you for reaching out, Thirumalai will get back to you shortly.
+              <p className="text-xs sm:text-sm font-medium text-red-100 mb-4">
+                Your message has been dispatched to <strong>thirumalaiofficial007@gmail.com</strong>.
               </p>
+              <button
+                onClick={() => setSubmitted(false)}
+                className="px-6 py-2 rounded-full bg-white text-black font-bold text-xs uppercase tracking-wider hover:bg-gray-200 transition-colors"
+              >
+                Send Another Message
+              </button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-6 sm:gap-8 md:gap-12 w-full">
@@ -199,10 +235,20 @@ const Contact = () => {
 
                 <button 
                   type="submit" 
-                  className="px-6 sm:px-8 py-3 sm:py-3.5 rounded-full bg-black text-white font-extrabold flex items-center justify-center gap-2 sm:gap-3 hover:bg-white hover:text-[#ff2a2a] transition-all duration-300 group shadow-lg text-xs sm:text-sm"
+                  disabled={isSubmitting}
+                  className="px-6 sm:px-8 py-3 sm:py-3.5 rounded-full bg-black text-white font-extrabold flex items-center justify-center gap-2 sm:gap-3 hover:bg-white hover:text-[#ff2a2a] transition-all duration-300 group shadow-lg text-xs sm:text-sm disabled:opacity-70 cursor-pointer"
                 >
-                  Send Message
-                  <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4 transform group-hover:translate-x-1 transition-transform" />
+                  {isSubmitting ? (
+                    <>
+                      <span>Sending...</span>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    </>
+                  ) : (
+                    <>
+                      <span>Send Message</span>
+                      <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4 transform group-hover:translate-x-1 transition-transform" />
+                    </>
+                  )}
                 </button>
               </div>
             </form>

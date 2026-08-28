@@ -20,7 +20,7 @@ const projectsData = [
     ],
     techStack: ['React.js', 'Redux Toolkit', 'Tailwind CSS', 'Node.js', 'Express.js', 'MongoDB', 'Cloudinary', 'JWT'],
     githubUrl: 'https://github.com/Thirumalai23013035',
-    liveUrl: '#',
+    liveUrl: 'https://shopsphere-weld-nu.vercel.app/',
     accentColor: 'from-red-600 to-amber-600'
   },
   {
