@@ -17,22 +17,44 @@ const Hero = () => {
       easing: 'ease-out'
     });
 
-    // Start video ONLY AFTER the Preloader animation finishes (2.6 seconds delay)
+    // Start video WITH SOUND after Preloader animation finishes (2.6s delay)
     const preloaderTimer = setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.muted = true; // Muted initially for browser autoplay compliance
-        setIsMuted(true);
-        videoRef.current.play().then(() => {
+      const video = videoRef.current;
+      if (video) {
+        video.muted = false; // Attempt sound unmuted playback first
+        setIsMuted(false);
+
+        video.play().then(() => {
           setIsPlaying(true);
         }).catch((err) => {
-          console.log("Preloader auto-play error:", err);
-          setIsPlaying(false);
+          console.log("Unmuted autoplay restricted by browser, attempting muted fallback:", err);
+          // Fallback to muted playback if browser blocks unmuted autoplay
+          video.muted = true;
+          setIsMuted(true);
+          video.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
         });
       }
     }, 2600);
 
-    return () => clearTimeout(preloaderTimer);
+    // Unmute audio automatically on first user click/touch anywhere on the page
+    const handleFirstUserInteraction = () => {
+      const video = videoRef.current;
+      if (video && video.muted) {
+        video.muted = false;
+        setIsMuted(false);
+      }
+    };
+
+    window.addEventListener('click', handleFirstUserInteraction, { once: true });
+    window.addEventListener('touchstart', handleFirstUserInteraction, { once: true });
+
+    return () => {
+      clearTimeout(preloaderTimer);
+      window.removeEventListener('click', handleFirstUserInteraction);
+      window.removeEventListener('touchstart', handleFirstUserInteraction);
+    };
   }, []);
+
 
   const toggleVideo = (e) => {
     e.stopPropagation();
