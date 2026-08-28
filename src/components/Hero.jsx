@@ -16,6 +16,14 @@ const Hero = () => {
       once: true,
       easing: 'ease-out'
     });
+    // Video autoplays once on initial load (muted)
+    if (videoRef.current) {
+      videoRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch(() => {
+        setIsPlaying(false);
+      });
+    }
   }, []);
 
   const toggleVideo = (e) => {
@@ -25,6 +33,7 @@ const Hero = () => {
         if (videoRef.current.ended) {
           videoRef.current.currentTime = 0;
         }
+        // Unmute audio when user clicks play button
         videoRef.current.muted = isMuted;
         videoRef.current.play().then(() => {
           setIsPlaying(true);
@@ -49,9 +58,11 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative w-full h-screen overflow-hidden bg-black font-sans">
-      {/* Clear Background Video - Runs once until play button clicked */}
+      {/* Clear Background Video - Autoplays once on site open */}
       <video
         ref={videoRef}
+        autoPlay
+        muted
         playsInline
         onEnded={() => setIsPlaying(false)}
         className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-90 transition-opacity duration-500"
@@ -59,6 +70,7 @@ const Hero = () => {
         <source src={heroVideo} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
+
 
 
       {/* Light Text Protection Gradient */}
