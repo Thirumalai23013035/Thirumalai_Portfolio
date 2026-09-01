@@ -69,7 +69,7 @@ const Footer = () => {
         </div>
         
         <div className="flex flex-col gap-1 md:items-center">
-          <a href="mailto:thirumalaiofficial007@gmail.com" className="text-white hover:text-[#ff2a2a] transition-colors font-bold lowercase flex items-center gap-1.5 truncate">
+          <a href="mailto:thirumalaiofficial07@gmail.com" className="text-white hover:text-[#ff2a2a] transition-colors font-bold lowercase flex items-center gap-1.5 truncate">
             <Mail className="w-3.5 h-3.5 shrink-0" />
             <span className="truncate">thirumalaiofficial07@gmail.com</span>
           </a>
