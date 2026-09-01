@@ -26,7 +26,7 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/thirumalaiofficial007@gmail.com', {
+      const response = await fetch('https://formsubmit.co/ajax/thirumalaiofficial07@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,12 +48,12 @@ const Contact = () => {
         setFormData({ firstName: '', lastName: '', email: '', message: '' });
       } else {
         // Fallback directly to mailto
-        window.location.href = `mailto:thirumalaiofficial007@gmail.com?subject=${encodeURIComponent(`Portfolio Message from ${formData.firstName}`)}&body=${encodeURIComponent(`${formData.message}\n\nSender: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}`)}`;
+        window.location.href = `mailto:thirumalaiofficial07@gmail.com?subject=${encodeURIComponent(`Portfolio Message from ${formData.firstName}`)}&body=${encodeURIComponent(`${formData.message}\n\nSender: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}`)}`;
         setSubmitted(true);
       }
     } catch (err) {
       // Network or CORS fallback
-      window.location.href = `mailto:thirumalaiofficial007@gmail.com?subject=${encodeURIComponent(`Portfolio Message from ${formData.firstName}`)}&body=${encodeURIComponent(`${formData.message}\n\nSender: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}`)}`;
+      window.location.href = `mailto:thirumalaiofficial07@gmail.com?subject=${encodeURIComponent(`Portfolio Message from ${formData.firstName}`)}&body=${encodeURIComponent(`${formData.message}\n\nSender: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}`)}`;
       setSubmitted(true);
     } finally {
       setIsSubmitting(false);
@@ -101,12 +101,12 @@ const Contact = () => {
                 </div>
                 <div className="overflow-hidden">
                   <span className="block text-[9px] sm:text-[10px] text-red-200 font-bold uppercase tracking-wider">Email</span>
-                  <span className="text-[11px] sm:text-xs font-bold text-white truncate block">thirumalaiofficial007@gmail.com</span>
+                  <span className="text-[11px] sm:text-xs font-bold text-white truncate block">thirumalaiofficial07@gmail.com</span>
                 </div>
               </a>
 
               <a 
-                href="tel:+917339413624"
+                href="tel:+91 phone"
                 className="bg-black/30 backdrop-blur-md border border-white/20 p-3.5 sm:p-4 rounded-2xl flex items-center gap-3 hover:bg-black/50 transition-colors"
               >
                 <div className="p-2 sm:p-2.5 rounded-xl bg-white/10 text-white shrink-0">
