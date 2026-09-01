@@ -93,7 +93,7 @@ const Contact = () => {
             {/* Direct Contact Pills */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
               <a 
-                href="mailto:thirumalaiofficial007@gmail.com"
+                href="mailto:thirumalaiofficial07@gmail.com"
                 className="bg-black/30 backdrop-blur-md border border-white/20 p-3.5 sm:p-4 rounded-2xl flex items-center gap-3 hover:bg-black/50 transition-colors"
               >
                 <div className="p-2 sm:p-2.5 rounded-xl bg-white/10 text-white shrink-0">
@@ -114,7 +114,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <span className="block text-[9px] sm:text-[10px] text-red-200 font-bold uppercase tracking-wider">Phone</span>
-                  <span className="text-[11px] sm:text-xs font-bold text-white block">+91 7339413624</span>
+                  <span className="text-[11px] sm:text-xs font-bold text-white block">+91 will update</span>
                 </div>
               </a>
 
